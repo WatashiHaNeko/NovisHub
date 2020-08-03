@@ -14,7 +14,8 @@ class UsersController extends AppController {
       try {
         $user = $this->Users->newEntity([
           'auth_id' => $this->request->getData('auth_id', ''),
-          'auth_password' => $this->request->getData('auth_id', ''),
+          'auth_password' => $this->request->getData('auth_password', ''),
+          'name' => $this->request->getData('auth_id', ''),
         ]);
 
         if ($user->hasErrors()) {
@@ -27,10 +28,10 @@ class UsersController extends AppController {
             ])
             ->first() === null;
 
-        if ($user->hasErrors()) {
+        if (!$isAuthIdAvailable) {
           $user->setError('auth_id', __('この{0}は既に使用されています。', __('ログインID')));
 
-          throw new AppException();
+          throw new AppException(__('入力内容を確認してください。'));
         }
 
         $userSaved = $this->Users->save($user);
