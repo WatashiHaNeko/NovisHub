@@ -1,0 +1,46 @@
+version: "3.7"
+
+services:
+  server:
+    image: "nginx:1.18"
+    container_name: "novis-hub-arakaki-app-server"
+    environment:
+      VIRTUAL_HOST: "novis-hub.arakaki.app"
+      LETSENCRYPT_HOST: "novis-hub.arakaki.app"
+    volumes:
+      - "./nginx/nginx.conf:/etc/nginx/nginx.conf"
+      - "./nginx/conf.d:/etc/nginx/conf.d"
+      - "./nginx/certs:/etc/nginx/certs"
+      - "./app:/usr/share/nginx/html"
+    networks:
+      novis-hub-arakaki-app-network:
+        aliases:
+          - "server"
+      nginx-network:
+
+  php-fpm:
+    image: "php-fpm:novis-hub-arakaki-app"
+    build:
+      context: "./"
+      dockerfile: "Dockerfile.php-fpm"
+    container_name: "novis-hub-arakaki-app-php-fpm"
+    volumes:
+      - "./php/php.ini:/usr/local/etc/php/php.ini"
+      - "./app:/var/www/html"
+    networks:
+      novis-hub-arakaki-app-network:
+        aliases:
+          - "php-fpm"
+      mysql-network:
+
+networks:
+  novis-hub-arakaki-app-network:
+    name: "novis-hub-arakaki-app-network"
+    ipam:
+      config:
+        - subnet: "172.45.0.0/24"
+  nginx-network:
+    external: true
+  mysql-network:
+    external: true
+
