@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Exception\Exception as AppException;
+use Cake\Auth\DefaultPasswordHasher;
 use Cake\Log\Log;
 
 class UsersController extends AppController {
@@ -52,6 +53,37 @@ class UsersController extends AppController {
     $this->set(compact([
       'user',
     ]));
+  }
+
+  public function signin() {
+    if ($this->request->is(['post'])) {
+      try {
+        $user = $this->Users->find()
+            ->where([
+              ['Users.auth_id' => $this->request->getData('auth_id', '')],
+            ])
+            ->first();
+
+        if (empty($user)) {
+          throw new AppException(__('入力内容を確認してください。'));
+        }
+
+        $passwordHasher = new DefaultPasswordHasher();
+
+        $isPasswordValid = $passwordHasher->check($this->request->getData('auth_password', ''), $user['auth_password']);
+
+        if (!$isPasswordValid) {
+          throw new AppException(__('入力内容を確認してください。'));
+        }
+
+        $this->Flash->success(__('ログインに成功しました。'));
+      } catch (AppException $exception) {
+        $this->Flash->error(implode('', [
+          __('ログインに失敗しました。'),
+          $exception->getMessage(),
+        ]));
+      }
+    }
   }
 }
 

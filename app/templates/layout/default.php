@@ -34,9 +34,9 @@
           <div class="btn-group">
             <a href="<?= $this->Url->build([
             ]) ?>" class="btn btn-outline-primary">
-              <?= vsprintf('%s / %s', [
+              <?= vsprintf('%s / <small>%s</small>', [
+                __('アカウント登録'),
                 __('ログイン'),
-                __('新規登録'),
               ]) ?>
             </a>
           </div>

@@ -3,10 +3,10 @@
     <div class="card mb-2">
       <div class="card-body">
         <h5 class="card-title mb-3">
-          <?= __('新規登録') ?>
+          <?= __('ログイン') ?>
         </h5>
 
-        <?= $this->Form->create($user, ['novalidate' => true]) ?>
+        <?= $this->Form->create(null, ['novalidate' => true]) ?>
           <div class="mb-3">
             <label class="form-label">
               <?= __('ログインID') ?>
@@ -15,13 +15,8 @@
             <?= $this->Form->text('auth_id', [
               'class' => implode(' ', [
                 'form-control',
-                $this->Form->isFieldError('auth_id') ? 'is-invalid' : '',
               ]),
             ]) ?>
-
-            <div class="invalid-feedback">
-              <?= $this->Form->error('auth_id') ?>
-            </div>
           </div>
 
           <div class="mb-3">
@@ -32,13 +27,8 @@
             <?= $this->Form->password('auth_password', [
               'class' => implode(' ', [
                 'form-control',
-                $this->Form->isFieldError('auth_password') ? 'is-invalid' : '',
               ]),
             ]) ?>
-
-            <div class="invalid-feedback">
-              <?= $this->Form->error('auth_password') ?>
-            </div>
           </div>
 
           <button class="btn btn-primary">
@@ -46,7 +36,7 @@
               <path fill-rule="evenodd" d="M10.97 4.97a.75.75 0 0 1 1.071 1.05l-3.992 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.236.236 0 0 1 .02-.022z"/>
             </svg>
 
-            <?= __('新しいアカウントを登録する') ?>
+            <?= __('アカウントにログインする') ?>
           </button>
         <?= $this->Form->end() ?>
       </div>
@@ -54,9 +44,9 @@
 
     <div class="text-right">
       <a href="<?= $this->Url->build([
-        'action' => 'signin',
+        'action' => 'signup',
       ]) ?>">
-        <?= __('アカウントにログインする') ?>
+        <?= __('新しいアカウントを登録する') ?>
       </a>
     </div>
   </div>
