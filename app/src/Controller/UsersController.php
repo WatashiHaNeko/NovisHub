@@ -41,6 +41,10 @@ class UsersController extends AppController {
           throw new AppException(__('時間を置いて再度お試しください。'));
         }
 
+        $this->Auth->setUser([
+          'id' => $user['id'],
+        ]);
+
         $this->Flash->success(__('アカウント登録が完了しました。'));
       } catch (AppException $exception) {
         $this->Flash->error(implode('', [
@@ -75,6 +79,10 @@ class UsersController extends AppController {
         if (!$isPasswordValid) {
           throw new AppException(__('入力内容を確認してください。'));
         }
+
+        $this->Auth->setUser([
+          'id' => $user['id'],
+        ]);
 
         $this->Flash->success(__('ログインに成功しました。'));
       } catch (AppException $exception) {

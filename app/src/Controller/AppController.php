@@ -11,6 +11,8 @@ class AppController extends Controller {
   public function initialize(): void {
     parent::initialize();
 
+    $this->loadModel('Users');
+
     $this->loadComponent('Auth');
     $this->loadComponent('Flash');
     $this->loadComponent('RequestHandler');
@@ -20,6 +22,18 @@ class AppController extends Controller {
     parent::beforeFilter($event);
 
     $this->Auth->allow();
+
+    $this->authUser = null;
+
+    if (!empty($this->Auth->user('id'))) {
+      $this->authUser = $this->Users->find()
+          ->where([
+            ['Users.id' => $this->Auth->user('id')],
+          ])
+          ->first();
+    }
+
+    $this->set('authUser', $this->authUser);
   }
 }
 
