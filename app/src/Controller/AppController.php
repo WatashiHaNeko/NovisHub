@@ -13,7 +13,15 @@ class AppController extends Controller {
 
     $this->loadModel('Users');
 
-    $this->loadComponent('Auth');
+    $this->loadComponent('Auth', [
+      'authError' => __('ログイン情報がありません。'),
+      'loginAction' => [
+        'prefix' => false,
+        'controller' => 'Users',
+        'action' => 'signin',
+      ],
+    ]);
+
     $this->loadComponent('Flash');
     $this->loadComponent('RequestHandler');
   }

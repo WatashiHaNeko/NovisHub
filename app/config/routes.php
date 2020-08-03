@@ -25,3 +25,18 @@ $routes->scope('/', function (RouteBuilder $builder) {
   $builder->fallbacks();
 });
 
+$routes->prefix('settings', function (RouteBuilder $builder) {
+  $builder->registerMiddleware('csrf', new CsrfProtectionMiddleware([
+    'httpOnly' => true,
+  ]));
+
+  $builder->connect('/', [
+    'controller' => 'Home',
+    'action' => 'index',
+  ]);
+
+  $builder->applyMiddleware('csrf');
+
+  $builder->fallbacks();
+});
+
