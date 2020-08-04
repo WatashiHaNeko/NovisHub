@@ -30,12 +30,12 @@ $routes->prefix('settings', function (RouteBuilder $builder) {
     'httpOnly' => true,
   ]));
 
+  $builder->applyMiddleware('csrf');
+
   $builder->connect('/', [
     'controller' => 'Home',
     'action' => 'index',
   ]);
-
-  $builder->applyMiddleware('csrf');
 
   $builder->fallbacks();
 });
