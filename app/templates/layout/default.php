@@ -32,13 +32,28 @@
 
         <div class="btn-toolbar">
           <div class="btn-group">
+            <?php if (empty($authUser)): ?>
             <a href="<?= $this->Url->build([
+              'prefix' => false,
+              'controller' => 'Users',
+              'action' => 'signup',
             ]) ?>" class="btn btn-outline-primary">
               <?= vsprintf('%s / <small>%s</small>', [
                 __('アカウント登録'),
                 __('ログイン'),
               ]) ?>
             </a>
+
+            <?php else: ?>
+
+            <a href="<?= $this->Url->build([
+              'prefix' => 'Settings',
+              'controller' => 'Home',
+              'action' => 'index',
+            ]) ?>" class="btn btn-outline-secondary">
+              <?= __('{0}さん', $authUser['name']) ?>
+            </a>
+            <?php endif; ?>
           </div>
         </div>
       </nav>
