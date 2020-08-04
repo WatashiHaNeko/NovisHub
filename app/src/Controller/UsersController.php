@@ -46,6 +46,12 @@ class UsersController extends AppController {
         ]);
 
         $this->Flash->success(__('アカウント登録が完了しました。'));
+
+        return $this->redirect([
+          'prefix' => 'Settings',
+          'controller' => 'Home',
+          'action' => 'index',
+        ]);
       } catch (AppException $exception) {
         $this->Flash->error(implode('', [
           __('アカウント登録に失敗しました。'),
@@ -85,6 +91,12 @@ class UsersController extends AppController {
         ]);
 
         $this->Flash->success(__('ログインに成功しました。'));
+
+        return $this->redirect([
+          'prefix' => 'Settings',
+          'controller' => 'Home',
+          'action' => 'index',
+        ]);
       } catch (AppException $exception) {
         $this->Flash->error(implode('', [
           __('ログインに失敗しました。'),

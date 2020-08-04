@@ -40,3 +40,9 @@ $routes->prefix('settings', function (RouteBuilder $builder) {
   $builder->fallbacks();
 });
 
+$routes->prefix('api', function (RouteBuilder $builder) {
+  $builder->setExtensions(['json']);
+
+  $builder->fallbacks(DashedRoute::class);
+});
+

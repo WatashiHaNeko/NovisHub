@@ -70,6 +70,8 @@
     <footer>
     </footer>
 
+    <?= $this->fetch('modal') ?>
+
     <?= $this->fetch('postLink') ?>
 
     <?= $this->Html->script('https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js', [

@@ -19,7 +19,6 @@
         'action' => 'profile',
       ]),
       'label' => __('プロフィール'),
-      'value' => h($authUser['profile']),
     ]) ?>
   </div>
 
