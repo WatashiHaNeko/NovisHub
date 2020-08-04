@@ -13,6 +13,8 @@
         <div class="col">
           <h5>
             <a href="<?= $this->Url->build([
+              'action' => 'view',
+              $user['id'],
             ]) ?>" class="link-dark">
               <?= h($user['name']) ?>
             </a>

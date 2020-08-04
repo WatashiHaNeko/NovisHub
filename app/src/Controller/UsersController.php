@@ -21,6 +21,18 @@ class UsersController extends AppController {
     ]));
   }
 
+  public function view(string $id) {
+    $user = $this->Users->find()
+        ->where([
+          ['Users.id' => $id],
+        ])
+        ->first();
+
+    $this->set(compact([
+      'user',
+    ]));
+  }
+
   public function signup() {
     $user = null;
 

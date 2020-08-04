@@ -5,21 +5,22 @@ namespace App\Controller\Api;
 
 use App\Exception\Exception as AppException;
 use Cake\Log\Log;
-use cebe\markdown\GithubMarkdown;
 
 class UsersController extends ApiController {
+  public function initialize(): void {
+    parent::initialize();
+
+    $this->loadComponent('Markdown');
+  }
+
   public function previewProfile() {
     try {
       if (!$this->request->is(['post'])) {
         throw new AppException(__('不正なリクエストです。'));
       }
 
-      $parser = new GithubMarkdown();
-
-      $html = $parser->parse($this->request->getData('text', ''));
-
       $this->responseData['data'] = [
-        'html' => $html,
+        'html' => $this->Markdown->parse($this->request->getData('text')),
       ];
     } catch (AppException $exception) {
       $this->responseData['success'] = false;
