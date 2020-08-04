@@ -9,7 +9,8 @@ use Cake\Validation\Validator;
 class UsersTable extends Table {
   public function validationDefault(Validator $validator): Validator {
     $validator
-        ->notEmptyString('auth_id', __('{0}を入力してください。', __('ログインID')), 'create')
+        ->requirePresence('auth_id', 'create')
+        ->notEmptyString('auth_id', __('{0}を入力してください。', __('ログインID')))
         ->add('auth_id', 'custom', [
           'rule' => function ($value, $context) {
             return !!preg_match('/^([a-zA-Z0-9_]+)$/', $value);
@@ -17,9 +18,11 @@ class UsersTable extends Table {
           'message' => __('{0}は数字、アルファベット、_ (アンダーバー)で入力してください', __('ログインID')),
         ]);
 
-    $validator->notEmptyString('auth_password', __('{0}を入力してください。', __('パスワード')), 'create');
+    $validator
+        ->requirePresence('auth_password', 'create')
+        ->notEmptyString('auth_password', __('{0}を入力してください。', __('パスワード')));
 
-    $validator->notEmptyString('name', __('{0}を入力してください。', __('名前')), 'update');
+    $validator->notEmptyString('name', __('{0}を入力してください。', __('名前')));
 
     return $validator;
   }

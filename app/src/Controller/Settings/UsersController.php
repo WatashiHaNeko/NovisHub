@@ -53,5 +53,55 @@ class UsersController extends SettingsController {
       'user',
     ]));
   }
+
+  public function authId() {
+    $user = $this->authUser;
+
+    if ($this->request->is(['put'])) {
+      try {
+        $this->Users->patchEntity($user, [
+          'auth_id' => $this->request->getData('auth_id', ''),
+        ]);
+
+        if ($user->hasErrors()) {
+          throw new AppException(__('入力内容を確認してください。'));
+        }
+
+        $isAuthIdAvailable = $this->Users->find()
+            ->where([
+              ['Users.auth_id' => $user['auth_id']],
+            ])
+            ->first() === null;
+
+        if (!$isAuthIdAvailable) {
+          $user->setError('auth_id', __('この{0}は既に使用されています。', __('ログインID')));
+
+          throw new AppException(__('入力内容を確認してください。'));
+        }
+
+        $userSaved = $this->Users->save($user);
+
+        if (!$userSaved) {
+          throw new AppException(__('時間を置いて再度お試しください。'));
+        }
+
+        $this->Flash->success(__('{0}を保存しました。', __('ユーザー情報')));
+
+        return $this->redirect([
+          'controller' => 'Home',
+          'action' => 'index',
+        ]);
+      } catch (AppException $exception) {
+        $this->Flash->error(implode('', [
+          __('{0}の保存に失敗しました。', __('ユーザー情報')),
+          $exception->getMessage(),
+        ]));
+      }
+    }
+
+    $this->set(compact([
+      'user',
+    ]));
+  }
 }
 
