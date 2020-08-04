@@ -19,6 +19,8 @@ class UsersTable extends Table {
 
     $validator->notEmptyString('auth_password', __('{0}を入力してください。', __('パスワード')), 'create');
 
+    $validator->notEmptyString('name', __('{0}を入力してください。', __('名前')), 'update');
+
     return $validator;
   }
 }
