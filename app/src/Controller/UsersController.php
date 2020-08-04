@@ -8,6 +8,19 @@ use Cake\Auth\DefaultPasswordHasher;
 use Cake\Log\Log;
 
 class UsersController extends AppController {
+  public function index() {
+    $usersQuery = $this->Users->find()
+        ->order(['Users.created' => 'desc']);
+
+    $users = $this->paginate($usersQuery, [
+      'limit' => 20,
+    ]);
+
+    $this->set(compact([
+      'users',
+    ]));
+  }
+
   public function signup() {
     $user = null;
 

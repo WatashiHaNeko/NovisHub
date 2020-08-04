@@ -34,6 +34,8 @@
 
     <div class="text-right text-md-left">
       <a href="<?= $this->Url->build([
+        'controller' => 'Users',
+        'action' => 'index',
       ]) ?>" class="btn btn-sm btn-outline-info">
         <?= __('もっと見る・検索') ?>
 
