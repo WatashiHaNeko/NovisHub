@@ -20,6 +20,14 @@
       ]),
       'label' => __('プロフィール'),
     ]) ?>
+
+    <?= $this->element('Settings/Home/index/list_item', [
+      'url' => $this->Url->build([
+        'controller' => 'Users',
+        'action' => 'avatar',
+      ]),
+      'label' => __('アバター画像'),
+    ]) ?>
   </div>
 
   <h2 class="h4 mb-2">
