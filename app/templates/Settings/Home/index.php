@@ -24,6 +24,14 @@
     <?= $this->element('Settings/Home/index/list_item', [
       'url' => $this->Url->build([
         'controller' => 'Users',
+        'action' => 'profileSummary',
+      ]),
+      'label' => __('検索用プロフィール'),
+    ]) ?>
+
+    <?= $this->element('Settings/Home/index/list_item', [
+      'url' => $this->Url->build([
+        'controller' => 'Users',
         'action' => 'avatar',
       ]),
       'label' => __('アバター画像'),

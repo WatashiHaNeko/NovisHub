@@ -24,6 +24,22 @@ class UsersTable extends Table {
 
     $validator->notEmptyString('name', __('{0}を入力してください。', __('名前')));
 
+    $validator
+        ->add('profile_summary', 'custom', [
+          'rule' => function ($value, $context) {
+            return substr_count($value, "\n") < 3;
+          },
+          'message' => __('{0}は３行以下で入力してください。', __('検索用プロフィール')),
+        ])
+        ->add('profile_summary', 'custom', [
+          'rule' => function ($value, $context) {
+            $value = preg_replace('/\r\n/', "\n", $value);
+
+            return mb_strlen($value) <= 50;
+          },
+          'message' => __('{0}は５０文字以下で入力してください。', __('検索用プロフィール')),
+        ]);
+
     return $validator;
   }
 }

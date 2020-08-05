@@ -19,6 +19,10 @@
               <?= h($user['name']) ?>
             </a>
           </h5>
+
+          <p class="mb-0 text-muted">
+            <?= nl2br(h($user['profile_summary'])) ?>
+          </p>
         </div>
       </div>
     </div>
