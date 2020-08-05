@@ -3,7 +3,7 @@ upstream php-fpm {
 }
 
 server {
-  server_name listeners-cloud.com;
+  server_name ${VIRTUAL_HOST};
 
   listen 80;
 
