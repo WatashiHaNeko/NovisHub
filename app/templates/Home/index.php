@@ -19,7 +19,7 @@
 </div>
 
 <div class="row mb-5 pb-md-4">
-  <div class="col-md-6 mb-4 mb-md-0">
+  <div class="col-md-4 mb-4 mb-md-0">
     <div class="mb-2 text-center text-md-left">
       <svg width="4em" height="4em" viewBox="0 0 16 16" class="rounded-lg text-primary" fill="currentColor">
         <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
@@ -29,7 +29,7 @@
     </div>
 
     <h2 class="display-5 font-weight-normal text-center text-md-left">
-      <?= __('新しく登録したエンジニア') ?>
+      <?= __('新しく登録した駆け出しエンジニア') ?>
     </h2>
 
     <div class="text-right text-md-left">
@@ -47,7 +47,12 @@
     </div>
   </div>
 
-  <div class="col-md-6">
+  <div class="col-md-8">
+    <?php foreach ($users as $user): ?>
+    <?= $this->element('user_card', [
+      'user' => $user,
+    ]) ?>
+    <?php endforeach; ?>
   </div>
 </div>
 
