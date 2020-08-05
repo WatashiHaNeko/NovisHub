@@ -3,44 +3,66 @@ version: "3.7"
 services:
   server:
     image: "nginx:1.18"
-    container_name: "novis-hub-arakaki-app-server"
-    environment:
-      VIRTUAL_HOST: "novis-hub.arakaki.app"
-      LETSENCRYPT_HOST: "novis-hub.arakaki.app"
+    container_name: "novis-hub-server"
+    env_file:
+      - "development.env"
     volumes:
       - "./nginx/nginx.conf:/etc/nginx/nginx.conf"
       - "./nginx/conf.d:/etc/nginx/conf.d"
       - "./nginx/certs:/etc/nginx/certs"
       - "./app:/usr/share/nginx/html"
     networks:
-      novis-hub-arakaki-app-network:
+      novis-hub-app-network:
         aliases:
           - "server"
-      nginx-network:
+      novis-hub-reverse-proxy-network:
 
   php-fpm:
-    image: "php-fpm:novis-hub-arakaki-app"
+    image: "php-fpm:novis-hub"
     build:
       context: "./"
       dockerfile: "Dockerfile.php-fpm"
-    container_name: "novis-hub-arakaki-app-php-fpm"
+    container_name: "novis-hub-php-fpm"
     volumes:
       - "./php/php.ini:/usr/local/etc/php/php.ini"
       - "./app:/var/www/html"
     networks:
-      novis-hub-arakaki-app-network:
+      novis-hub-app-network:
         aliases:
           - "php-fpm"
-      mysql-network:
+      novis-hub-database-network:
+
+  nginx-proxy:
+    image: "jwilder/nginx-proxy"
+    container_name: "novis-hub-nginx-proxy"
+    ports:
+      - "80:80"
+    volumes:
+      - "/var/run/docker.sock:/tmp/docker.sock:ro"
+    networks:
+      novis-hub-reverse-proxy-network:
+
+  mysql-server:
+    image: "mysql:8"
+    container_name: "novis-hub-mysql-server"
+    ports:
+      - "3306:3306"
+    volumes:
+      - "novis-hub-database-volume:/var/lib/mysql"
+    env_file:
+      - "development.env"
+    networks:
+      novis-hub-database-network:
+
+volumes:
+  novis-hub-database-volume:
+    name: "novis-hub-database-volume"
 
 networks:
-  novis-hub-arakaki-app-network:
-    name: "novis-hub-arakaki-app-network"
-    ipam:
-      config:
-        - subnet: "172.45.0.0/24"
-  nginx-network:
-    external: true
-  mysql-network:
-    external: true
+  novis-hub-app-network:
+    name: "novis-hub-app-network"
+  novis-hub-reverse-proxy-network:
+    name: "novis-hub-reverse-proxy-network"
+  novis-hub-database-network:
+    name: "novis-hub-database-network"
 
