@@ -10,7 +10,34 @@ use Cake\Log\Log;
 class UsersController extends AppController {
   public function index() {
     $usersQuery = $this->Users->find()
+        ->contain(['UserTags.Tags'])
         ->order(['Users.created' => 'desc']);
+
+    $searchTagLabel = $this->request->getQuery('tag_label');
+
+    if (!empty($searchTagLabel)) {
+      $usersQuery
+          ->matching('UserTags.Tags', function ($q) use ($searchTagLabel) {
+            return $q
+                ->where([
+                  ['Tags.label' => $searchTagLabel],
+                ]);
+          });
+    }
+
+    $searchText = $this->request->getQuery('text');
+
+    if (!empty($searchText)) {
+      $usersQuery
+          ->where([
+            [
+              'OR' => [
+                ['Users.name LIKE' => sprintf('%%%s%%', $searchText)],
+                ['Users.profile_summary LIKE' => sprintf('%%%s%%', $searchText)],
+              ],
+            ],
+          ]);
+    }
 
     $users = $this->paginate($usersQuery, [
       'limit' => 20,
