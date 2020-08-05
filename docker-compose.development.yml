@@ -4,6 +4,9 @@ services:
   server:
     image: "nginx:1.18"
     container_name: "novis-hub-server"
+    command: >
+      /bin/sh -c
+      "envsubst '$$VIRTUAL_HOST' < /etc/nginx/conf.d/development.conf.org > /etc/nginx/conf.d/development.conf && nginx -g 'daemon off;'"
     env_file:
       - "development.env"
     volumes:
