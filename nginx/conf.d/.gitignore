@@ -1,2 +1,5 @@
-development.conf
-production.conf
+*.conf
+!default.conf
+staging.conf.org
+production.conf.org
+
