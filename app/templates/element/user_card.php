@@ -11,6 +11,8 @@
       <div class="col">
         <h5>
           <a href="<?= $this->Url->build([
+            'prefix' => false,
+            'controller' => 'Users',
             'action' => 'view',
             $user['id'],
           ]) ?>" class="link-dark">
@@ -22,6 +24,9 @@
         <div>
           <?php foreach ($user['user_tags'] as $userTag): ?>
           <a href="<?= $this->Url->build([
+            'prefix' => false,
+            'controller' => 'Users',
+            'action' => 'index',
             '?' => [
               'page' => 1,
               'tag_label' => $userTag['tag']['label'],
