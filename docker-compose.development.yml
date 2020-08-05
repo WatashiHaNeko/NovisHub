@@ -26,6 +26,8 @@ services:
       context: "./"
       dockerfile: "Dockerfile.php-fpm"
     container_name: "novis-hub-php-fpm"
+    env_file:
+      - "development.env"
     volumes:
       - "./php/php.ini:/usr/local/etc/php/php.ini"
       - "./app:/var/www/html"
