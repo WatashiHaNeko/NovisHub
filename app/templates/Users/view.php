@@ -27,9 +27,15 @@ $this->Html->script('https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.2/
     </div>
 
     <div class="col-md-8">
+      <?php if (!empty($user['profile'])): ?>
       <div id="markdown-text" class="markdown-body">
         <?= $this->Markdown->parse($user['profile']) ?>
       </div>
+      <?php else: ?>
+      <div>
+        <?= __('まだ{0}が登録されていません。', __('プロフィール')) ?>
+      </div>
+      <?php endif; ?>
     </div>
   </div>
 </div>
