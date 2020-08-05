@@ -32,6 +32,14 @@
     <?= $this->element('Settings/Home/index/list_item', [
       'url' => $this->Url->build([
         'controller' => 'Users',
+        'action' => 'tags',
+      ]),
+      'label' => __('検索用タグ'),
+    ]) ?>
+
+    <?= $this->element('Settings/Home/index/list_item', [
+      'url' => $this->Url->build([
+        'controller' => 'Users',
         'action' => 'avatar',
       ]),
       'label' => __('アバター画像'),
